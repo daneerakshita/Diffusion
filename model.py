@@ -31,15 +31,24 @@ class VaritionalAutoEncoder(nn.Module):
 
     def decode(self, z):
         #p_theta(x|z)
-        pass
+        p = self.relu(self.z_2hid(z))
+        return torch.sigmoid(self.hid_2img(p))      #so value is betwn 0 & 1
 
     def forward(self, x):
-        pass
+        mu, sigma = self.encode(x)
+        epsilon = torch.randn_like(sigma)       #reparamatrization
+        z_new = mu + sigma*epsilon
+        x_reconstructed = self.decode(z_new)
+        return x_reconstructed, mu, sigma
 
 
 if __name__ == "__main__":
-    x = torch.randn(1, 784)
-    #vae = VaritionalAutoEncoder()
-    #print(vae(x).shape)
+    x = torch.randn(1, 28*28)
+    vae = VaritionalAutoEncoder(input_dim=784)
+    x_reconstructed, mu, sigma = vae(x)
+    print(x_reconstructed.shape)
+    print(mu.shape)
+    print(sigma.shape)
+
 
 
