@@ -1,4 +1,4 @@
-# Variational Autoencoder (VAE) — MNIST
+# Variational Autoencoder
 
 A Variational Autoencoder built from scratch in PyTorch, trained on the MNIST handwritten digits dataset.
 
